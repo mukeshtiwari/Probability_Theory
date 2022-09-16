@@ -73,11 +73,11 @@ Section Distr.
 
 
   (* Probability Monad *)
-  Definition Ret {n : nat} {A : Type} (x : A) : @Dist n := 
-    fun _ => one.
+  Definition Ret {n : nat} (x : Fin n) : @Dist 1 := 
+    fun x => one.
 
-  Definition Bind {m n : nat} {A B : Type} 
-    (xs : @Dist m) (f : A -> @Dist m) : @Dist m.
+  Definition Bind {m n : nat} 
+    (xs : @Dist m) (f : Fin (S m) -> @Dist n) : @Dist m.
   Proof.
   Admitted. 
   
