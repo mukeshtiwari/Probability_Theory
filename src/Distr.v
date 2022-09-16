@@ -71,13 +71,22 @@ Section Distr.
      apply dist_trans].
   Qed.
 
+    
+
 
   (* Probability Monad *)
-  Definition Ret {n : nat} (x : Fin n) : @Dist 1 := 
-    fun x => one.
+  (* if you give an element x of type Fin (S n),
+    I construct a distribution where probability of 
+    x is one and everything is zero *)
+  Definition Ret {n : nat} (x : Fin (S n)) : @Dist n := 
+    fun y => match fin_dec x y with 
+      | left _ => one
+      | right _ => zero
+    end.
 
   Definition Bind {m n : nat} 
     (xs : @Dist m) (f : Fin (S m) -> @Dist n) : @Dist m.
   Proof.
+    
   Admitted. 
   

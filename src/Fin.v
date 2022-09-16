@@ -169,6 +169,40 @@ Section Fin.
   Defined.
   
 
+  Definition fin_dec : 
+    forall {n : nat} (x y : Fin n), 
+    {x = y} + {x <> y}.
+  Proof.
+    refine(
+      fix Fn n x {struct x} := 
+        match x as x' in Fin n' 
+        return forall (pf : n = n'),  
+        x = eq_rect n' (fun u => Fin u) x' n (eq_sym pf) -> _ 
+        with 
+        | Fz => fun pf Hx y => _ 
+        | Fs xp => fun pf Hx y => _ 
+        end eq_refl eq_refl).
+    + 
+      destruct (fin_inv_S y) as [Hl | [t Hr]];
+      subst; [left | right].
+      ++ reflexivity.
+      ++ intro Hf; inversion Hf.
+    + 
+      destruct (fin_inv_S y) as [Hl | [t Hr]];
+      subst.
+      ++ 
+        right; intros Hf; inversion Hf.
+      ++ 
+        destruct (Fn _ xp t) as [Hl | Hr];
+        subst.
+        +++
+          left; auto.
+        +++
+          right; intro Hf.
+          apply Hr.
+          apply FS_inj.
+          exact Hf.
+  Defined.
 
 
   Lemma fin_to_nat_lt :
