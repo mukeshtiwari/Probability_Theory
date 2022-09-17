@@ -1,4 +1,6 @@
 -R src/  Discprob 
 
-src/Fin.v
+
 src/Prob.v
+src/Matrix.v
+src/Fin_util.v
