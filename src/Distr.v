@@ -22,7 +22,6 @@ Section Distr.
 
   (* A probability distribution is a function 
     from finite type to Prob. It's non-empty set.
-    
   *)
   Definition Dist {n : nat} := Fin (S n) -> prob.
 
@@ -85,8 +84,9 @@ Section Distr.
     end.
 
   Definition Bind {m n : nat} 
-    (xs : @Dist m) (f : Fin (S m) -> @Dist n) : @Dist m.
+    (xs : @Dist m) (f : Fin (S m) -> @Dist n) : @Dist (m * n).
   Proof.
-    
-  Admitted. 
-  
+    unfold Dist in * |- *.
+    refine(
+      fun xs => _ ).
+  Admitted.
